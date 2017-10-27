@@ -38,5 +38,11 @@ class Py4SQLStatements:
             # dbcursor.execute(sqlstatement, rc)
         return None
 
+    @staticmethod
+    def update_table_with_newdata(table_name, field_names, field_values):
+        for c, v in zip(field_names, field_values):
+            sqlstatement = '''UPDATE {} SET "{}" = "{}"'''.format \
+                (table_name, c, str(v))
+
 
 
