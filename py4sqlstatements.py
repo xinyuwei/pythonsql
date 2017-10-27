@@ -17,7 +17,7 @@ class Py4SQLStatements:
             sqlstatement, str, sql statement
         e.g.
         meta_data = [{'name': 'userid', 'sqltype': 'INTEGER NOT NULL'},
-                    {'name': 'username', 'sqltype': 'TEXT NOT NULL'},   # 'TEXT NOT NULL UNIQUE', may be non-unique as version
+                    {'name': 'username', 'sqltype': 'TEXT NOT NULL UNIQUE'},
                     {'name': 'age', 'sqltype': 'INTEGER'},
                     {'name': 'height', 'sqltype': 'REAL'}]
         """
@@ -26,5 +26,17 @@ class Py4SQLStatements:
             sqlstatement = sqlstatement + rc['name'] + " " + rc['sqltype'] + ", "
         sqlstatement = sqlstatement.rstrip(', ') + ");"
         return sqlstatement
+
+    @staticmethod
+    def load_data_to_table(datablock, table_name, meta_data):
+        """sql"""
+        for row in datablock:
+            rc = tuple(row)
+            sqlstatement = 'INSERT INTO ' + table_name + \
+                           ' (' + ','.join(a['name'] for a in meta_data) + ')' + \
+                           ' VALUES (' + ','.join('?' for i in range(len(rc))) + ')'
+            # dbcursor.execute(sqlstatement, rc)
+        return None
+
 
 
